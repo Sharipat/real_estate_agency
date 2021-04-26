@@ -10,7 +10,7 @@ def fix_numbers(apps, schema_editor):
             number.owners_pure_phone = phonenumbers.format_number(checked_number, phonenumbers.PhoneNumberFormat.E164)
             number.save()
 
-def move_forward(apps, schema_editor):
+def move_backward(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for number in Flat.objects.all():
         number.owners_pure_phone = ''
@@ -22,5 +22,5 @@ class Migration(migrations.Migration):
         ('property', '0007_flat_owners_pure_phone'),
     ]
 
-    operations = [migrations.RunPython(fix_numbers, move_forward)
+    operations = [migrations.RunPython(fix_numbers, move_backward)
     ]

@@ -12,7 +12,7 @@ def transfer_owners(apps, schema_editor):
                                     clear_phone_number=number.owners_pure_phone
                                     )
 
-def move_forward(apps, schema_editor):
+def move_backward(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     Owner = apps.get_model('property', 'Owner')
     for owner, owners_phonenumber, owners_pure_phone in Flat.objects.all():
@@ -27,5 +27,5 @@ class Migration(migrations.Migration):
         ('property', '0009_owner'),
     ]
 
-    operations = [migrations.RunPython(transfer_owners, move_forward)
+    operations = [migrations.RunPython(transfer_owners, move_backward)
     ]

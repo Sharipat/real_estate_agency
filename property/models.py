@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Flat(models.Model):
     new_building = models.NullBooleanField('новостройка', db_index=True)
     liked_by = models.ManyToManyField(User,
-                                      related_name="liked_flats",
+                                      related_name='liked_flats',
                                       verbose_name='Кто лайкнул',
                                       blank=True)
     created_at = models.DateTimeField(
@@ -60,12 +60,14 @@ class Complaint(models.Model):
             User,
             on_delete=models.CASCADE,
             null=True,
+            related_name = 'users',
             verbose_name='Кто жаловался:'
         )
         flat = models.ForeignKey(
             Flat,
             on_delete=models.CASCADE,
             null=True,
+            related_name = 'flats',
             verbose_name='Квартира, на которую пожаловались:'
         )
         text = models.TextField(

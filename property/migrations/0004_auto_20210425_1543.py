@@ -5,13 +5,10 @@ from django.db import migrations
 def find_new_flats(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = True
-        else:
-            flat.new_building = False
+        flat = flat.construction_year >= 2015
         flat.save()
 
-def move_forward(apps, schema_editor):
+def move_backward(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
         flat.new_building = None
@@ -24,4 +21,4 @@ class Migration(migrations.Migration):
         ('property', '0003_flat_new_building'),
     ]
 
-    operations = [migrations.RunPython(find_new_flats, move_forward)]
+    operations = [migrations.RunPython(find_new_flats, move_backward)]
