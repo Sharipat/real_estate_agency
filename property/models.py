@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 class Flat(models.Model):
     new_building = models.NullBooleanField('новостройка', db_index=True)
     liked_by = models.ManyToManyField(User,
@@ -56,28 +57,28 @@ class Flat(models.Model):
 
 
 class Complaint(models.Model):
-        user = models.ForeignKey(
+    user = models.ForeignKey(
             User,
             on_delete=models.CASCADE,
             null=True,
-            related_name = 'users',
-            verbose_name='Кто жаловался:'
-        )
-        flat = models.ForeignKey(
+            related_name='users',
+            verbose_name='Кто жаловался:')
+    flat = models.ForeignKey(
             Flat,
             on_delete=models.CASCADE,
             null=True,
-            related_name = 'flats',
+            related_name='flats',
             verbose_name='Квартира, на которую пожаловались:'
         )
-        text = models.TextField(
+    text = models.TextField(
             'Текст жалобы:',
             max_length=300,
             null=True
         )
 
-        def __str__(self):
-            return f'{self.user}, {self.flat}'
+    def __str__(self):
+        return f'{self.user}, {self.flat}'
+
 
 class Owner(models.Model):
     owner = models.CharField('ФИО владельца', max_length=200, db_index=True)
@@ -85,9 +86,8 @@ class Owner(models.Model):
     clear_phone_number = PhoneNumberField('Нормализованный номер владельца', blank=True)
     owned_flats = models.ManyToManyField(Flat,
                                          related_name='owners',
-                                        verbose_name='Квартиры в собственности',
+                                         verbose_name='Квартиры в собственности',
                                          db_index=True)
 
     def __str__(self):
         return f'{self.owner}'
-

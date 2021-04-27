@@ -5,7 +5,7 @@ from django.db import migrations
 def find_new_flats(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        flat = flat.construction_year >= 2015
+        flat.new_building = flat.construction_year >= 2015
         flat.save()
 
 def move_backward(apps, schema_editor):
